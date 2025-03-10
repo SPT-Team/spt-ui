@@ -33,7 +33,7 @@ jobs:
 
           MESSAGE=$(jq -n \
             --arg msg_type "interactive" \
-            --arg commit_msg "${{ env.COMMIT_MSG }}" \
+            --arg commit_msg "$COMMIT_MSG" \
             --arg status "$STATUS" \
             --arg pr_link "$PR_LINK" \
             --arg author "$AUTHOR_NAME" \
