@@ -60,8 +60,7 @@ jobs:
                                 "tag": "lark_md"
                         },
                         "url": $PR_LINK,
-                        "type": "default",
-                        "value": {}
+                        "type": "primary"
                       }],
                       "tag": "action"
                     }],
