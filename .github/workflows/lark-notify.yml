@@ -11,12 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Get Commit Message
-        id: commit
-        run: |
-          COMMIT_MSG=$(git log -1 --pretty=%B)
-          echo "COMMIT_MSG=${COMMIT_MSG}" >> $GITHUB_ENV
-      
       - name: Send to Lark
         env:
           LARK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
