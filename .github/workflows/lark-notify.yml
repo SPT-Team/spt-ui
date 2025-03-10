@@ -32,42 +32,45 @@ jobs:
           AUTHOR_NAME="${{ github.event.pull_request.user.login }}"
 
           MESSAGE=$(jq -n \
-            --arg msg_type "text" \
+            --arg msg_type "interactive" \
+            --arg commit_msg "${{ env.COMMIT_MSG }}" \
+            --arg status "$STATUS" \
+            --arg pr_link "$PR_LINK" \
+            --arg author "$AUTHOR_NAME" \
             '{
-                msg_type: $msg_type, 
-                content: {
-                  "card": {
-                    "header": {
-                      "title": {
-                        "content": "🔔 新 PR 待审查",
-                        "tag": "plain_text"
-                      }
-                    },
-                    "elements": [{
-                      "tag": "div",
-                      "text": {
-                        "content": "📌 **标题**: ${{ env.COMMIT_MSG }}
-                                  \n🚥 **状态**: $STATUS",
-                                  \n🔗 **提交链接**: $PR_LINK",
-                                  \n👤 **提交者**: @$AUTHOR_NAME",
-                        "tag": "lark_md"
-                      }
-                    }, {
-                      "actions": [{
-                        "tag": "button",
-                        "text": {
-                                "content": "前往审查",
-                                "tag": "lark_md"
-                        },
-                        "url": $PR_LINK,
-                        "type": "default",
-                        "value": {}
-                      }],
-                      "tag": "action"
-                    }],
+              msg_type: $msg_type,
+              card: {
+                header: {
+                  title: {
+                    content: "🔔 新 PR 待审查",
+                    tag: "plain_text"
                   }
-                }
-              }')
+                },
+                elements: [
+                  {
+                    tag: "div",
+                    text: {
+                      content: "📌 **标题**: \($commit_msg)\n🚥 **状态**: \($status)\n🔗 **提交链接**: \($pr_link)\n👤 **提交者**: @\($author)",
+                      tag: "lark_md"
+                    }
+                  },
+                  {
+                    tag: "action",
+                    actions: [
+                      {
+                        tag: "button",
+                        text: {
+                          content: "前往审查",
+                          tag: "lark_md"
+                        },
+                        url: $pr_link,
+                        type: "primary"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }')
 
           curl -sS -X POST "$LARK_URL" \
             -H "Content-Type: application/json" \
