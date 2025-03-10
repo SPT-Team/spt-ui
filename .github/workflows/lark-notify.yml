@@ -1,0 +1,74 @@
+name: Notify Lark on Event
+
+on:
+  pull_request:
+    types: [opened, closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get Commit Message
+        id: commit
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "COMMIT_MSG=${COMMIT_MSG}" >> $GITHUB_ENV
+      
+      - name: Send to Lark
+        env:
+          LARK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          STATUS="🟢 进行中"
+          if [ "${{ github.event.pull_request.state }}" == "open" ]; then
+            STATUS="🟢 进行中"
+          else
+            STATUS="🔴 已关闭"
+          fi
+          PR_LINK="${{ github.event.pull_request.html_url }}"
+          AUTHOR_NAME="${{ github.event.pull_request.user.login }}"
+
+          MESSAGE=$(jq -n \
+            --arg msg_type "text" \
+            '{
+                msg_type: $msg_type, 
+                content: {
+                  "card": {
+                    "header": {
+                      "title": {
+                        "content": "🔔 新 PR 待审查",
+                        "tag": "plain_text"
+                      }
+                    },
+                    "elements": [{
+                      "tag": "div",
+                      "text": {
+                        "content": "📌 **标题**: ${{ env.COMMIT_MSG }}
+                                  \n🚥 **状态**: $STATUS",
+                                  \n🔗 **提交链接**: $PR_LINK",
+                                  \n👤 **提交者**: @$AUTHOR_NAME",
+                        "tag": "lark_md"
+                      }
+                    }, {
+                      "actions": [{
+                        "tag": "button",
+                        "text": {
+                                "content": "前往审查",
+                                "tag": "lark_md"
+                        },
+                        "url": $PR_LINK,
+                        "type": "default",
+                        "value": {}
+                      }],
+                      "tag": "action"
+                    }],
+                  }
+                }
+              }')
+
+          curl -sS -X POST "$LARK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$MESSAGE"

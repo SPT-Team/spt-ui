@@ -1,0 +1,66 @@
+@import "../../styles/vars.scss";
+
+.#{$prefix}-select {
+  width: 100%;
+
+  &-outlined {
+    :global {
+      .el-select__wrapper {
+        background-color: transparent;
+        border: 1px solid var(--el-border-color);
+        box-shadow: none;
+
+        &:hover {
+          border-color: var(--el-color-primary);
+        }
+
+        &.is-focus {
+          border-color: var(--el-color-primary);
+          box-shadow: 0 0 0 2px rgba(var(--el-color-primary-rgb), 0.1);
+        }
+      }
+    }
+  }
+
+  &-filled {
+    :global {
+      .el-select__wrapper {
+        background-color: var(--el-fill-color-dark);
+        border: 1px solid transparent;
+        box-shadow: none;
+
+        &:hover {
+          background-color: var(--el-fill-color);
+        }
+
+        &.is-focus {
+          background-color: var(--el-fill-color-dark);
+          border-color: var(--el-color-primary);
+          box-shadow: 0 0 0 2px rgba(var(--el-color-primary-rgb), 0.1);
+        }
+      }
+    }
+  }
+}
+
+.#{$prefix}-popper {
+  border: none !important;
+
+  &-outlined {
+    :global {
+      .el-select-dropdown__item:hover {
+        background-color: #006ae6 !important;
+        color: #fff;
+      }
+    }
+  }
+
+  &-filled {
+    :global {
+      .el-select-dropdown__item:hover {
+        background-color: #006ae6 !important;
+        color: #fff;
+      }
+    }
+  }
+}

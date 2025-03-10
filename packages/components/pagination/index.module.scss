@@ -1,0 +1,40 @@
+@import "../../styles/vars.scss";
+
+.#{$prefix}-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+
+  &-select {
+    margin: 0 10px;
+    min-width: 64px;
+  }
+
+  &-left,
+  &-right {
+    display: flex;
+    align-items: center;
+    color: rgba(128, 130, 144, 1);
+  }
+
+  :global {
+    .btn-prev,
+    .btn-next {
+      font-weight: 600;
+    }
+    .is-active {
+      border-radius: 6px;
+      color: rgb(181, 183, 200) !important;
+      background-color: var(--el-fill-color-dark);
+    }
+    .el-icon {
+      font-size: 16px !important;
+    }
+    .el-pagination button:disabled {
+      path {
+        fill: #464852;
+      }
+    }
+  }
+}

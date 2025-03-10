@@ -1,0 +1,12 @@
+{
+  "scripts": {},
+  "keywords": [],
+  "author": "decadez",
+  "license": "ISC",
+  "devDependencies": {
+    "chalk": "^5.4.1",
+    "lerna": "^8.2.1",
+    "node-notifier": "^10.0.1",
+    "tsx": "^4.19.3"
+  }
+}

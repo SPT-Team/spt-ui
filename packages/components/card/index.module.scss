@@ -1,0 +1,36 @@
+@import "../../styles/vars.scss";
+
+.#{$prefix}-card {
+  background: var(--el-bg-color);
+  border: 1px solid var(--el-border-color-extra-light);
+  color: var(--el-text-color-primary);
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+
+  &-header {
+    padding: 20px 30px;
+    flex-shrink: 0;
+    height: 62px;
+    border-bottom: 1px solid var(--el-border-color-extra-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      font-family: Inter;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 16px;
+      letter-spacing: 0%;
+      text-transform: capitalize;
+    }
+  }
+
+  &-content {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+  }
+}

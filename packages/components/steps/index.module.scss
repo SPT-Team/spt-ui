@@ -1,0 +1,132 @@
+@import "../../styles/vars.scss";
+
+@keyframes ripple {
+  0% {
+    width: 16px;
+    height: 16px;
+    opacity: 1;
+  }
+  100% {
+    width: 48px;
+    height: 48px;
+    opacity: 0;
+  }
+}
+
+.#{$prefix}-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.#{$prefix}-ripple-container {
+  z-index: 2;
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.#{$prefix}-inner-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: rgba(0, 106, 230, 1);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.#{$prefix}-outer-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 106, 230, 1);
+  border-radius: 50%;
+  z-index: 1;
+  animation: ripple 1.5s infinite;
+}
+
+.#{$prefix}-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 21px;
+    left: 50%;
+    width: 100%;
+    height: 6px;
+    // background: rgba(23, 35, 49, 1);
+    background: var(--el-color-primary-light-8);
+    z-index: 1;
+  }
+
+  &.#{$prefix}-completed::after {
+    background: rgba(0, 106, 230, 1);
+  }
+
+  &.#{$prefix}-active::after {
+    background: var(--el-color-primary-light-8);
+  }
+
+  &.#{$prefix}-completed .#{$prefix}-step-icon {
+    background-color: #67c23a;
+  }
+
+  &.#{$prefix}-active .#{$prefix}-step-icon {
+    background-color: #409eff;
+  }
+
+  .#{$prefix}-step-content {
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .#{$prefix}-step-title {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    text-transform: capitalize;
+    margin-bottom: 4px;
+    color: rgba(99, 102, 116, 1);
+  }
+
+  .#{$prefix}-step-owner {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0%;
+    text-transform: capitalize;
+    color: rgba(154, 156, 174, 1);
+    margin-bottom: 4px;
+  }
+
+  .#{$prefix}-step-description {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0%;
+    text-transform: capitalize;
+    color: rgba(99, 102, 116, 1);
+  }
+}
+
+.#{$prefix}-completed {
+  .#{$prefix}-step-title {
+    color: var(--el-text-color-primary);
+  }
+}
