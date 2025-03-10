@@ -24,6 +24,7 @@ jobs:
           fi
           PR_TITLE="${{ github.event.pull_request.title }}"
           AUTHOR_NAME="${{ github.event.pull_request.user.login }}"
+          PR_LINK="${{ github.event.pull_request.html_url }}"
 
           MESSAGE=$(jq -n \
             --arg msg_type "interactive" \
