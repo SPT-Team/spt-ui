@@ -28,12 +28,12 @@ jobs:
           else
             STATUS="🔴 已关闭"
           fi
-          PR_LINK="${{ github.event.pull_request.html_url }}"
+          PR_TITLE="${{ github.event.pull_request.title }}"
           AUTHOR_NAME="${{ github.event.pull_request.user.login }}"
 
           MESSAGE=$(jq -n \
             --arg msg_type "interactive" \
-            --arg commit_msg "$COMMIT_MSG" \
+            --arg pr_title "$PR_TITLE" \
             --arg status "$STATUS" \
             --arg pr_link "$PR_LINK" \
             --arg author "$AUTHOR_NAME" \
@@ -50,7 +50,7 @@ jobs:
                   {
                     tag: "div",
                     text: {
-                      content: "📌 **标题**: \($commit_msg)\n🚥 **状态**: \($status)\n🔗 **提交链接**: \($pr_link)\n👤 **提交者**: @\($author)",
+                      content: "📌 **标题**: \($pr_title)\n🚥 **状态**: \($status)\n👤 **提交者**: @\($author)",
                       tag: "lark_md"
                     }
                   },
